@@ -23,6 +23,7 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->app->bind(\App\Repositories\SalaRepository::class, \App\Repositories\SalaRepositoryEloquent::class);
         //:end-bindings:
     }
 }
