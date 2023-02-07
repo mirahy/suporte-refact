@@ -1,5 +1,6 @@
-@extends('errors::minimal')
+@extends('layouts.erro')
 
-@section('title', __('Server Error'))
-@section('code', '500')
-@section('message', __('Server Error'))
+@section('content')
+    <h1>500</h1>
+    <h2>Erro Interno no Servidor</h2>
+@endsection
