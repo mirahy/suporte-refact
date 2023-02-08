@@ -14,13 +14,14 @@
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\SalaController;
+use App\Http\Controllers\PeriodoLetivosController;
+use App\Http\Controllers\SalasController;
 
 // Grupo de rotas protegidas pela midlleware, ->>>criar midlaware para controle de login
 Route::middleware([])->group(function () {
 
     //Grupo de rotas para a classe HomeController
-    Route::controller(HomeController::class)->group(function(){
+    Route::controller(HomeController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('/home', 'index')->name('home');
         Route::get('/statuslist', 'statuslist');
@@ -62,7 +63,7 @@ Route::middleware([])->group(function () {
     // });
 
     //Grupo de rotas para a classe SalaController
-    Route::controller(SalaController::class)->group(function(){
+    Route::controller(SalasController::class)->group(function () {
         Route::get('/salas/status/{salaId}/{status}/{mensagem?}', 'statusSala')->where('mensagem', '(.*)');
         // //Route::get('/salas/status/{salaId}/{status}/{mensagem?}', 'TesteController@email')->where('mensagem', '(.*)');
         Route::patch('/salas/status/{salaId}', 'statusSala');
@@ -77,10 +78,12 @@ Route::middleware([])->group(function () {
         Route::get('/salas/objetivos', 'getObjetivosSalas');
         Route::get('/salas/charge/{periodoLetivoKey}/{codigoCurso}/{codigoDisciplina}/{salaTurma}', 'chargeDisciplina');
         Route::get('/salas/create/{periodoLetivoKey}/{codigoCurso}/{codigoDisciplina}/{salaTurma}', 'create');
-        Route::resource('salas', SalaController::class);
+        // // ->>>criar função dentro do conmtroller sala para recuperar usários e incluir rota no grupo SalaController
+        Route::get('/salas/usuarios', 'listUsers');
+        Route::resource('salas', SalasController::class);
     });
 
-  
+
 
     // //Grupo de rotas para a classe SalasOldController
     // Route::controller(SalasOldController::class)->group(function(){
@@ -129,13 +132,13 @@ Route::middleware([])->group(function () {
     //     Route::resource('salas-simplificadas', SalaSimplificadaController::class);
     // });
 
-    // //Grupo de rotas para a classe PeriodoLetivosController
-    // Route::controller(PeriodoLetivosController::class)->group(function(){
-    //     Route::get('/periodo-letivos/all', 'all');
-    //     Route::get('/periodo-letivos/id-padrao', 'getPeriodoLetivoIdPadrao');
-    //     Route::get('/periodo-letivos/sigecad', 'getListaSigecad');
-    //     Route::resource('periodo-letivos', PeriodoLetivosController::class);
-    // });
+    //Grupo de rotas para a classe PeriodoLetivosController
+    Route::controller(PeriodoLetivosController::class)->group(function () {
+        Route::get('/periodo-letivos/all', 'all');
+        Route::get('/periodo-letivos/id-padrao', 'getPeriodoLetivoIdPadrao');
+        Route::get('/periodo-letivos/sigecad', 'getListaSigecad');
+        Route::resource('periodo-letivos', PeriodoLetivosController::class);
+    });
 
     // //Grupo de rotas para a classe FaculdadesController
     // Route::controller(FaculdadesController::class)->group(function(){
@@ -263,8 +266,7 @@ Route::middleware([])->group(function () {
     // Route::get('/est/{periodoLetivoId}', [PlDisciplinaAcademico::class, 'limpaDisciplinas']);
 
 
-    // // ->>>criar função dentro do conmtroller sala para recuperar usários e incluir rota no grupo SalaController
-    // Route::get('/salas/usuarios', [UsuarioController::class ,'list']);
+
     // //->>>aletar as funções abaixo para a classe User controller
     // Route::get('/formulario-insere-usuarios', [ServidoresMoodleController::class, 'formulariosIndex']);
     // Route::post('/formulario-insere-usuarios', [ServidoresMoodleController::class, 'exportarEstudantes']);
@@ -274,18 +276,10 @@ Route::middleware([])->group(function () {
 
     Route::get('/css/{param1}', function ($param1) {
         $str = preg_replace('/\.[a-z0-9]*\./', '.', $param1);
-        return Response::download("js/angular/".$str);
+        return Response::download("js/angular/" . $str);
     })->where('param1', '(primeicons.+|color.+|hue.+)');
     Route::get('/{param2}', function ($param2) {
-        return Response::download("js/angular/".$param2);
+        return Response::download("js/angular/" . $param2);
     })->where('param2', '(open-sans-v15-latin.+|primeicons.+)');
-    
-
 });
 // Fim grupo de rotas autentidadas
-
-
-
-
-
-
