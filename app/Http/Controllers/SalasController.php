@@ -9,8 +9,11 @@ use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\SalaCreateRequest;
 use App\Http\Requests\SalaUpdateRequest;
+use App\Models\User;
 use App\Repositories\SalaRepository;
-use App\Validators\SalaValidator;
+use App\Repositories\UserRepository;
+use App\Services\SalaService;
+use App\Services\UserService;
 
 /**
  * Class SalasController.
@@ -19,47 +22,71 @@ use App\Validators\SalaValidator;
  */
 class SalasController extends Controller
 {
-    /**
-     * @var SalaRepository
-     */
+    protected $service;
     protected $repository;
 
-    /**
-     * @var SalaValidator
-     */
-    protected $validator;
 
     /**
      * SalasController constructor.
-     *
-     * @param SalaRepository $repository
-     * @param SalaValidator $validator
      */
-    public function __construct(SalaRepository $repository, SalaValidator $validator)
+    public function __construct(
+        SalaRepository $repository,
+        SalaService $service)
     {
-        $this->repository = $repository;
-        $this->validator  = $validator;
+        $this->service          = $service;
+        $this->repository       = $repository;
+
+        $this->middleware('auth');
+        $this->middleware('permissao:'.User::PERMISSAO_ADMINISTRADOR.','.User::PERMISSAO_USUARIO);
+        $this->middleware('permissao:'.User::PERMISSAO_ADMINISTRADOR)->except(['create', 'store', 'success', 'preparaCreate', 'chargeDisciplina', 'getModalidades', 'getObjetivosSalas']);
+        
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $salas = $this->repository->all();
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $salas,
-            ]);
-        }
-
-        return view('salas.index', compact('salas'));
+        return view("layouts.app-angular");
     }
+
+    public function listar()
+    {
+        return $this->service->all();
+    }
+
+    public function criar()
+    {
+        return view("salas.cria-sala");
+    }
+
+    public function visualizar($id)
+    {           
+        $sala = $this->service->findOrFail($id);
+        return view("salas.visualiza-sala", ['sala' => $sala]);
+    }
+
+    public function create()
+    {
+        return view("layouts.app-angular");
+    }
+
+
+    public function createOld()
+    {
+        $sala = $this->service->makeSala();
+        
+        return view("salas.cria-sala", ['sala' => $sala]);
+    }
+
+    public function listUsers()
+    {
+        return $this->service->allUsers();
+
+    }
+
+
+
+
+
 
     /**
      * Store a newly created resource in storage.
