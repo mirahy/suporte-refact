@@ -13,15 +13,14 @@ RUN apt-get update && apt-get install -y \
 
 COPY . /var/www
 WORKDIR /var/www
-
+RUN chmod -R 777 storage
+RUN chown www-data:www-data storage -R
 RUN useradd -u 1000 user \
     && addgroup user www-data
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # RUN git pull
-RUN chmod -R 777 storage
-RUN chown www-data:www-data storage -R
 # RUN composer update
 
 
