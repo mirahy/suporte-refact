@@ -2,21 +2,29 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Prettus\Repository\Contracts\Transformable;
+use Prettus\Repository\Traits\TransformableTrait;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+/**
+ * Class User.
+ *
+ * @package namespace App\Models;
+ */
+class User extends  Authenticatable implements Transformable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use TransformableTrait, HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     const PERMISSAO_ADMINISTRADOR = "ADMINISTRADOR";
     const PERMISSAO_USUARIO = 'USUARIO';
     const PERMISSAO_INATIVO = 'INATIVO';
 
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -49,15 +57,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-     /**
+    /**
      * muitos para muitos
      */
     public function gestorRecursos()
     {
-        return $this->belongsToMany('App\Recurso', 'gestores_recursos','user_id','recurso_id');
+        return $this->belongsToMany('App\Recurso', 'gestores_recursos', 'user_id', 'recurso_id');
     }
 
-    public function isAdmin() {
+    public function isAdmin()
+    {
         return $this->permissao == self::PERMISSAO_ADMINISTRADOR;
     }
 }
