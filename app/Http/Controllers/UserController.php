@@ -41,20 +41,14 @@ class UserController extends Controller
             return [];
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        return $this->service->store($request->all());
-    }
-
     public function show(User $usuario)
     {
         return $this->service->show($usuario);
+    }
+
+    public function store(Request $request)
+    {
+        return $this->service->store($request);
     }
 
     public function edit(User $usuario)

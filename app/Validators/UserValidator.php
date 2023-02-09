@@ -21,20 +21,21 @@ class UserValidator extends LaravelValidator
         ValidatorInterface::RULE_CREATE => [
             'name'        => 'required',
             'email'       => 'required',
-            //'email'       => 'required|email',
+            // 'email'       => 'required|email',
             //'permissao'   => 'required|permissao',
         ],
         ValidatorInterface::RULE_UPDATE => [
             'name'        => 'required',
             'email'       => 'required',
-            //'email'       => 'required|email',
+            // 'email'       => 'required|email',
             //'permissao'   => 'required|permissao',
         ],
     ];
 
-    protected $menssages = [
-        'name'    =>  'Nome é obrigatório',
-        'email'   =>  'Email é obrigatório'
+    protected $messages = [
+        'name'          =>  'Nome é obrigatório',
+        'email'         =>  'Email é obrigatório',
+        'email.email'   =>  'Formato de Email é inválido.'
 
     ];
 }

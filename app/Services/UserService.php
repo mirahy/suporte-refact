@@ -23,7 +23,8 @@ class UserService
         UserRepository      $repository,
         UserValidator       $validator,
         MessagesController  $exceptionMessagesController
-    ) {
+    ) 
+    {
         $this->repository                   = $repository;
         $this->validator                    = $validator;
         $this->exceptionMessagesController  = $exceptionMessagesController;
@@ -42,6 +43,64 @@ class UserService
         return $user->isAdmin();
     }
 
+    public function show(User $usuario)
+    {
+        $us = $this->repository->find($usuario->id);
+        return $us;
+    }
+
+    public function store($request)
+    {
+        try {
+            $vld = $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+
+
+            if ($vld) {
+                $usuario = new User();
+                $usuario->name = $request->input('name');
+                $usuario->email = $request->input('email');
+                $usuario->password = 'not set';
+                $usuario->permissao = User::PERMISSAO_USUARIO;
+                $usuario->save();
+
+                return User::all();
+            }
+        } catch (Exception $e) {
+            return $this->exceptionMessagesController->exceptionMessages($e);
+        }
+    }
+
+    public function update(Request $request, User $usuario)
+    {
+        try {
+            $vld = $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+
+            if ($vld) {
+                //$usuario->nome = $request->input('nome');
+                //$usuario->email = $request->input('email');
+                $usuario->permissao = $request->input('permissao');
+                $usuario->save();
+
+                return $usuario;
+            }
+        } catch (Exception $e) {
+            return $this->exceptionMessagesController->exceptionMessages($e);
+        }
+    }
+
+    public function destroy(User $usuario)
+    {
+        try {
+            if ($usuario->delete()) {
+                return new User();
+            } else {
+                abort(404, 'Usuário não encontrado');
+            }
+        } catch (Exception $e) {
+            return $this->exceptionMessagesController->exceptionMessages($e);
+        }
+    }
+
     public function usuarioEmail($uid)
     {
         $usuario = $this->repository->find($uid);
@@ -58,7 +117,6 @@ class UserService
 
         return $email;
     }
-
 
     public function getInfosLdapServidorByDescription($cpf, $createUser = false)
     {
@@ -117,67 +175,5 @@ class UserService
             return $usuarioLDAP;
         }
         return null;
-    }
-
-    public function store($data)
-    {
-        try {
-            $vld = $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
-
-            // process the login
-            if ($vld) {
-                abort(403, 'Erro de Validação');
-            }
-
-            $usuario = new User();
-            $usuario->name = $data->input('name');
-            $usuario->email = $data->input('email');
-            $usuario->password = 'not set';
-            $usuario->permissao = User::PERMISSAO_USUARIO;
-            $usuario->save();
-
-            return User::all();
-        } catch (Exception $e) {
-            return $this->exceptionMessagesController->exceptionMessages($e);
-        }
-    }
-
-    public function show(User $usuario)
-    {
-        $us = $this->repository->find($usuario->id);
-        return $us;
-    }
-
-    public function update(Request $request, User $usuario)
-    {
-        try {
-            $vld = $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
-
-            if ($vld) {
-                abort(403, 'Erro de Validação');
-            }
-
-            //$usuario->nome = $request->input('nome');
-            //$usuario->email = $request->input('email');
-            $usuario->permissao = $request->input('permissao');
-            $usuario->save();
-
-            return $usuario;
-        } catch (Exception $e) {
-            return $this->exceptionMessagesController->exceptionMessages($e);
-        }
-    }
-
-    public function destroy(User $usuario)
-    {
-        try {
-            if ($usuario->delete()) {
-                return new User();
-            } else {
-                abort(404, 'Usuário não encontrado');
-            }
-        } catch (Exception $e) {
-            return $this->exceptionMessagesController->exceptionMessages($e);
-        }
     }
 }
