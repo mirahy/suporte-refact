@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PeriodoLetivosController;
 use App\Http\Controllers\SalasController;
+use App\Http\Controllers\UserController;
 
 // Grupo de rotas protegidas pela midlleware, ->>>criar midlaware para controle de login
 Route::middleware([])->group(function () {
@@ -244,12 +245,12 @@ Route::middleware([])->group(function () {
     //     Route::post('/formulario-pessoas-estatus-lotacao/funcionario', 'getDadosFuncionarios');
     // });
 
-    // //Grupo de rotas para a classe UsuarioController
-    // Route::controller(UsuarioController::class)->group(function(){
-    //     Route::get('/usuarios/lista', 'all');
-    //     Route::get('/logado', 'usuarioLogado');
-    //     Route::resource('usuarios', UsuarioController::class);
-    // });
+    //Grupo de rotas para a classe UsuarioController
+    Route::controller(UserController::class)->group(function(){
+        Route::get('/usuarios/lista', 'all');
+        Route::get('/logado', 'usuarioLogado');
+        Route::resource('usuarios', UserController::class);
+    });
 
     // //Grupo de rotas para a classe LogsController
     // Route::controller(LogsController::class)->group(function(){
