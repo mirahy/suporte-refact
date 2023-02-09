@@ -23,8 +23,7 @@ class UserService
         UserRepository      $repository,
         UserValidator       $validator,
         MessagesController  $exceptionMessagesController
-    ) 
-    {
+    ) {
         $this->repository                   = $repository;
         $this->validator                    = $validator;
         $this->exceptionMessagesController  = $exceptionMessagesController;

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
 
-class ConnectDbController extends Controller
+class DbController extends Controller
 {
     private $exceptionMessagesController;
 
@@ -20,22 +20,27 @@ class ConnectDbController extends Controller
     public function connect($base)
     {
         try {
-            Config::set('database.default', $base); //atribuir a conexão padrão  
-            // Conecta no banco
-            DB::connection($base);
+            if (DB::connection()->getDatabaseName() != $base) //verifica se a conexão ja existe
+            {
+                //atribuir a conexão padrão 
+                Config::set('database.default', $base);
+                // Conecta no banco
+                DB::connection($base);
+            }
         } catch (Exception $e) {
-            return $this->exceptionMessagesController->exceptionMessages($e);
+            $this->exceptionMessagesController->exceptionMessages($e);
         }
     }
 
     public function reconnect($base)
     {
         try {
-            Config::set('database.default', $base); //atribuir a conexão padrão  
+            //atribuir a conexão padrão  
+            Config::set('database.default', $base);
             // Reconecta no banco
             DB::reconnect($base);
         } catch (Exception $e) {
-            return $this->exceptionMessagesController->exceptionMessages($e);
+            $this->exceptionMessagesController->exceptionMessages($e);
         }
     }
 
@@ -46,7 +51,7 @@ class ConnectDbController extends Controller
             // Encerra conexão
             DB::disconnect($base);
         } catch (Exception $e) {
-            return $this->exceptionMessagesController->exceptionMessages($e);
+            $this->exceptionMessagesController->exceptionMessages($e);
         }
     }
 }
