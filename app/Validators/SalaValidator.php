@@ -34,7 +34,7 @@ class SalaValidator extends LaravelValidator
         ],
     ];
 
-    protected $menssages = [
+    protected $messages = [
         'nome_sala'      => 'Nome da sala é obrigatório.',
         'email.required' => 'Email é obrigatório.',
         'email.email'    => 'formato de email inválido.',
