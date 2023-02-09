@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -46,7 +48,7 @@ class UserController extends Controller
         return $this->service->show($usuario);
     }
 
-    public function store(Request $request)
+    public function store(UserCreateRequest $request)
     {
         return $this->service->store($request);
     }
@@ -58,7 +60,7 @@ class UserController extends Controller
         return $usuario;
     }
 
-    public function update(Request $request, User $usuario)
+    public function update(UserUpdateRequest $request, User $usuario)
     {
         return $this->service->update($request, $usuario);
     }
