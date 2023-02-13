@@ -14,6 +14,7 @@
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PeriodoLetivosCategoriasController;
 use App\Http\Controllers\PeriodoLetivosController;
 use App\Http\Controllers\SalasController;
 use App\Http\Controllers\UserController;
@@ -153,11 +154,11 @@ Route::middleware([])->group(function () {
     //     Route::resource('cursos', CursosController::class);
     // });
 
-    // //Grupo de rotas para a classe PeriodoLetivosCategoriasController
-    // Route::controller(PeriodoLetivosCategoriasController::class)->group(function(){
-    //     Route::get('/periodo-letivos-categorias/all/{periodoLetivoId}', 'all');
-    //     Route::resource('periodo-letivos-categorias', PeriodoLetivosCategoriasController::class);
-    // });
+    //Grupo de rotas para a classe PeriodoLetivosCategoriasController
+    Route::controller(PeriodoLetivosCategoriasController::class)->group(function(){
+        Route::get('/periodo-letivos-categorias/all/{periodoLetivoId}', 'all');
+        Route::resource('periodo-letivos-categorias', PeriodoLetivosCategoriasController::class);
+    });
 
     //  //Grupo de rotas para a classe PlDisciplinasAcademicosController
     //  Route::controller(PlDisciplinasAcademicosController::class)->group(function(){
