@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure zip \
     && docker-php-ext-install mysqli pdo pdo_mysql pgsql pdo_pgsql zip ldap
 
-
+RUN chown -R www-data:www-data /var/www
 COPY . /var/www
 WORKDIR /var/www
 RUN chmod -R 777 storage
@@ -19,6 +19,7 @@ RUN useradd -u 1000 user \
     && addgroup user www-data
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
 
 # RUN git pull
 # RUN composer update
