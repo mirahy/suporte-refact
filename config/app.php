@@ -197,6 +197,7 @@ return [
 
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
         
+        Spatie\Activitylog\ActivitylogServiceProvider::class
 
     ],
 
