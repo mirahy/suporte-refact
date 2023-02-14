@@ -1,1 +1,2 @@
 *.sqlite*
+/seeders/inserts_suporte_ead.sql
