@@ -29,6 +29,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\PeriodoLetivoRepository::class, \App\Repositories\PeriodoLetivoRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\SigecadRepository::class, \App\Repositories\SigecadRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\PeriodoLetivoCategoriaRepository::class, \App\Repositories\PeriodoLetivoCategoriaRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\FaculdadeRepository::class, \App\Repositories\FaculdadeRepositoryEloquent::class);
         //:end-bindings:
     }
 }

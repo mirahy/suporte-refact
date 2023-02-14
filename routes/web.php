@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\FaculdadesController;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -142,11 +143,11 @@ Route::middleware([])->group(function () {
         Route::resource('periodo-letivos', PeriodoLetivosController::class);
     });
 
-    // //Grupo de rotas para a classe FaculdadesController
-    // Route::controller(FaculdadesController::class)->group(function(){
-    //     Route::get('/faculdades/all', 'all');
-    //     Route::resource('faculdades', FaculdadesController::class);
-    // });
+    //Grupo de rotas para a classe FaculdadesController
+    Route::controller(FaculdadesController::class)->group(function(){
+        Route::get('/faculdades/all', 'all');
+        Route::resource('faculdades', FaculdadesController::class);
+    });
 
     // //Grupo de rotas para a classe CursosController
     // Route::controller(CursosController::class)->group(function(){
