@@ -14,7 +14,7 @@ use Prettus\Repository\Traits\TransformableTrait;
  */
 class Configuracoes extends Model implements Transformable
 {
-    use TransformableTrait, SoftDeletes;
+    use TransformableTrait;
 
     const CONFIGURACAO_ARQUIVO_SALA_PADRAO = "ARQUIVO_SALA_PADRAO";
     const CONFIGURACAO_ARQUIVO_SAIDA = "ARQUIVO_SAIDA";
