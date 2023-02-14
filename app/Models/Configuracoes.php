@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class Configuracoes.
@@ -14,7 +16,7 @@ use Prettus\Repository\Traits\TransformableTrait;
  */
 class Configuracoes extends Model implements Transformable
 {
-    use TransformableTrait;
+    use TransformableTrait, LogsActivity;
 
     const CONFIGURACAO_ARQUIVO_SALA_PADRAO = "ARQUIVO_SALA_PADRAO";
     const CONFIGURACAO_ARQUIVO_SAIDA = "ARQUIVO_SAIDA";
@@ -42,4 +44,21 @@ class Configuracoes extends Model implements Transformable
         'valor'
     ];
 
+    // Eventos que acionam o log
+    protected static $recordEvents = [
+        'created', 'updated', 'deleted'
+    ];
+   
+    // Função para registrar log
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->setDescriptionForEvent(fn(string $eventName) => "Configuracões foi {$eventName}") // descrição do evento
+        ->useLogName('Configuracoes') // nome do evento
+        ->logOnly(['nome', 'valor']) // alterações nestes atributos serão registrados no log  
+        // ->dontLogIfAttributesChangedOnly([]) // atributos que não devem gerar log
+        ->logOnlyDirty() // registrar somente os atributos que foram alterados
+        ->dontSubmitEmptyLogs(); //impede que o pacote armazene logs vazios
+
+    }
 }

@@ -10,6 +10,8 @@ use Laravel\Sanctum\HasApiTokens;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class User.
@@ -18,7 +20,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends  Authenticatable implements Transformable
 {
-    use TransformableTrait, HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use TransformableTrait, HasApiTokens, HasFactory, Notifiable, SoftDeletes, LogsActivity;
 
     const PERMISSAO_ADMINISTRADOR = "ADMINISTRADOR";
     const PERMISSAO_USUARIO = 'USUARIO';
@@ -56,6 +58,27 @@ class User extends  Authenticatable implements Transformable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    // Eventos que acionam o log
+    protected static $recordEvents = [
+        'created', 'updated', 'deleted'
+    ];
+   
+    // Função para registrar log
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->setDescriptionForEvent(fn(string $eventName) => "Usuário foi {$eventName}") // descrição do evento
+        ->useLogName('Users') // nome do evento
+        ->logOnly(['id', 'name', 'email', 'permissao']) // alterações nestes atributos serão registrados no log  
+        ->dontLogIfAttributesChangedOnly(['password', 'remember_token']) // atributos que não devem gerar log
+        ->logOnlyDirty() // registrar somente os atributos que foram alterados
+        ->dontSubmitEmptyLogs(); //impede que o pacote armazene logs vazios
+
+    }
+
+    
 
     /**
      * muitos para muitos
