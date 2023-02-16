@@ -20,7 +20,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  */
 class User extends  Authenticatable implements Transformable
 {
-    use TransformableTrait, HasApiTokens, HasFactory, Notifiable, SoftDeletes, LogsActivity;
+    use TransformableTrait, HasApiTokens, HasFactory, Notifiable, LogsActivity;
 
     const PERMISSAO_ADMINISTRADOR = "ADMINISTRADOR";
     const PERMISSAO_USUARIO = 'USUARIO';

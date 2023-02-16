@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class DbController extends Controller
 {
-    private $exceptionMessagesController;
+    protected $exceptionMessagesController;
 
     public function __construct(MessagesController $exceptionMessagesController)
     {

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class Sala.
@@ -15,7 +17,7 @@ use Prettus\Repository\Traits\TransformableTrait;
  */
 class Sala extends Model implements Transformable
 {
-    use TransformableTrait, SoftDeletes;
+    use TransformableTrait, LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -85,6 +87,27 @@ class Sala extends Model implements Transformable
     ];
 
     protected $appends = array('status', 'nome_professor'/*,'periodo_letivo_id'*/);
+
+    // Eventos que acionam o log
+    protected static $recordEvents = [
+        'created', 'updated', 'deleted'
+    ];
+   
+    // Função para registrar log
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->setDescriptionForEvent(fn(string $eventName) => "Sala foi {$eventName}") // descrição do evento
+        ->useLogName('Sala') // nome do evento
+        ->logOnly(['id', 'nome_professor', 'email', 'curso_id', 'nome_sala', 'modalidade', 'objetivo_sala',
+                   'senha_aluno', 'observacao', 'status', 'estudantes', 'mensagem', 'periodo_letivo_id',
+                   'carga_horaria_total_disciplina', 'avaliacao', 'turma_nome', 'turma_id', 'periodo_letivo_key',
+                   'disciplina_key', 'macro_id', 'sala_moodle_id', 'lote_salas_id']) // alterações nestes atributos serão registrados no log  
+        // ->dontLogIfAttributesChangedOnly([]) // atributos que não devem gerar log
+        ->logOnlyDirty() // registrar somente os atributos que foram alterados
+        ->dontSubmitEmptyLogs(); //impede que o pacote armazene logs vazios
+
+    }
 
     public function getStatusAttribute($value)
     {
