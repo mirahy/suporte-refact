@@ -4,7 +4,10 @@ services:
     host-laravel:
         build: .
         working_dir: /var/www
-        volumes:
+        volumes: 
+            # usar volume-host-laravel somente com imagem do suporte
+            # - volume-host-laravel:/var/www
+            # usar ./ para desenvolvimento
             - ./:/var/www
         environment:
             APP_ENV: local
@@ -54,7 +57,10 @@ services:
             - "8080:80"
         image: nginx:latest
         volumes:
-            - ".:/var/www"
+            # usar volume-host-laravel somente com imagem do suporte
+            # - volume-host-laravel:/var/www
+            # usar ./ para desenvolvimento
+            - ./:/var/www
             - "./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf"
         links:
             - host-laravel
@@ -83,3 +89,5 @@ networks:
 
 volumes:
     volume-mysql:
+    # usar volume-host-laravel somente com imagem do suporte
+    # volume-host-laravel:
