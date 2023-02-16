@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\CursosController;
 use App\Http\Controllers\FaculdadesController;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
@@ -149,11 +150,11 @@ Route::middleware([])->group(function () {
         Route::resource('faculdades', FaculdadesController::class);
     });
 
-    // //Grupo de rotas para a classe CursosController
-    // Route::controller(CursosController::class)->group(function(){
-    //     Route::get('/cursos/all', 'all');
-    //     Route::resource('cursos', CursosController::class);
-    // });
+    //Grupo de rotas para a classe CursosController
+    Route::controller(CursosController::class)->group(function(){
+        Route::get('/cursos/all', 'all');
+        Route::resource('cursos', CursosController::class);
+    });
 
     //Grupo de rotas para a classe PeriodoLetivosCategoriasController
     Route::controller(PeriodoLetivosCategoriasController::class)->group(function(){
