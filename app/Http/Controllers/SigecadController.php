@@ -20,7 +20,7 @@ use App\Validators\SigecadValidator;
  */
 class SigecadController extends Controller
 {
-    private $service;
+    protected $service;
    
     public function __construct(
         SigecadService $service

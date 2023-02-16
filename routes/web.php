@@ -19,6 +19,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PeriodoLetivosCategoriasController;
 use App\Http\Controllers\PeriodoLetivosController;
 use App\Http\Controllers\SalasController;
+use App\Http\Controllers\UnidadeOrganizacionalController;
 use App\Http\Controllers\UserController;
 
 // Grupo de rotas protegidas pela midlleware, ->>>criar midlaware para controle de login
@@ -221,20 +222,20 @@ Route::middleware([])->group(function () {
     //     Route::resource('reservas', ReservasController::class);
     // });
 
-    //  //Grupo de rotas para a classe UnidadeOrganizacionalController
-    //  Route::controller(UnidadeOrganizacionalController::class)->group(function(){
-    //     Route::get('/formulario-insere-ad', 'index');
-    //     Route::post('/formulario-insere-ad', 'criarContasAD');
-    //     Route::post('/formulario-insere-ad/substitui-emails', 'substituiEmailsPorPadrao');
-    //     Route::get('/formulario-altera-usuario', 'index');
-    //     Route::post('/formulario-altera-usuario/password', 'alterarSenha');
-    //     Route::get('/unidade-organizacional/ldapuser/{username}', 'getLdapUser');
-    //     Route::get('/unidade-organizacional/ous-filhas', 'getOusFilhas');
-    //     Route::get('/unidade-organizacional/ou-dir-root', 'getOuDirRoot');
-    //     Route::post('/unidade-organizacional/ou-dir-root', 'setOuDirRoot');
-    //     Route::get('/unidade-organizacional/all', 'all');
-    //     Route::resource('unidade-organizacional', UnidadeOrganizacionalController::class);
-    // });
+     //Grupo de rotas para a classe UnidadeOrganizacionalController
+     Route::controller(UnidadeOrganizacionalController::class)->group(function(){
+        Route::get('/formulario-insere-ad', 'index');
+        Route::post('/formulario-insere-ad', 'criarContasAD');
+        Route::post('/formulario-insere-ad/substitui-emails', 'substituiEmailsPorPadrao');
+        Route::get('/formulario-altera-usuario', 'index');
+        Route::post('/formulario-altera-usuario/password', 'alterarSenha');
+        Route::get('/unidade-organizacional/ldapuser/{username}', 'getLdapUser');
+        Route::get('/unidade-organizacional/ous-filhas', 'getOusFilhas');
+        Route::get('/unidade-organizacional/ou-dir-root', 'getOuDirRoot');
+        Route::post('/unidade-organizacional/ou-dir-root', 'setOuDirRoot');
+        Route::get('/unidade-organizacional/all', 'all');
+        Route::resource('unidade-organizacional', UnidadeOrganizacionalController::class);
+    });
 
     // //Grupo de rotas para a classe PessoasEstatusLotacaoController
     // Route::controller(PessoasEstatusLotacaoController::class)->group(function(){
