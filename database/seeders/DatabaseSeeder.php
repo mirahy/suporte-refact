@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        $path = 'database/seeders/inserts_suporte_ead.sql';
+        $path = 'database/seeders/script.sql';
         DB::unprepared(file_get_contents($path));
         $this->command->info('Database inserts completed successfully!');
 

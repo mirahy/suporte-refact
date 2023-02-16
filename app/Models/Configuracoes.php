@@ -34,6 +34,7 @@ class Configuracoes extends Model implements Transformable
     const CONFIGURACAO_AD_USER_PRINCIPAL_NAME_SUFIXO = "AD_USER_PRINCIPAL_NAME_SUFIXO";
     const CONFIGURACAO_AD_EMAIL_PADRAO_SUFIXO = "AD_EMAIL_PADRAO_SUFIXO";
 
+    protected $table = 'configuracoes';
     protected $fillable = [
         'nome',
         'valor'

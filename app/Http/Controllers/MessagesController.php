@@ -16,7 +16,7 @@ class MessagesController extends Controller
             case HttpException::class:
               return $msg;
             case QueryException::class:
-              abort(403, $msg = implode(" , ", $msg->getMessage()));
+              abort(403, $msg->getMessage());
             case ValidatorException::class:
               abort(403, $msg = implode(" , ", $msg->getMessageBag()->all()));
             case Exception::class:

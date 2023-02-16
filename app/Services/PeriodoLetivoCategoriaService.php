@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Controllers\MessagesController;
+use App\Repositories\PeriodoLetivoCategoriaRepository;
 use App\Repositories\PeriodoLetivoRepository;
 use App\Validators\PeriodoLetivoCategoriaValidator;
 use Exception;
@@ -16,7 +17,7 @@ class PeriodoLetivoCategoriaService
     private $exceptionMessagesController;
 
     public function __construct(
-        PeriodoLetivoRepository $repositoryPeriodoletivo,
+        PeriodoLetivoCategoriaRepository $repositoryPeriodoletivo,
         PeriodoLetivoCategoriaValidator $validator,
         MessagesController $exceptionMessagesController
     ) {
