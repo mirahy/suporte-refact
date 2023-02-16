@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-
+use Adldap\Laravel\Facades\Adldap;
+use Adldap\Models\Attributes\AccountControl;
 use App\Http\Controllers\MessagesController;
 use App\Models\Configuracoes;
 use App\Models\UnidadeOrganizacional;
