@@ -16,6 +16,7 @@ use App\Http\Controllers\FaculdadesController;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MacrosController;
 use App\Http\Controllers\PeriodoLetivosCategoriasController;
 use App\Http\Controllers\PeriodoLetivosController;
 use App\Http\Controllers\SalasController;
@@ -34,7 +35,7 @@ Route::middleware([])->group(function () {
     });
 
      //Grupo de rotas para a classe MacroController
-     Route::controller(MacroController::class)->group(function(){
+     Route::controller(MacrosController::class)->group(function(){
         Route::get('/macro', '@index');
         Route::post('/macro/file',  'store');
         Route::post('/macro/name', 'createUpdate');
