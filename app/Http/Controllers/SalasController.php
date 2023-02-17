@@ -83,6 +83,21 @@ class SalasController extends Controller
 
     }
 
+    public function getSufixoNomeSala($plId)
+    {
+        return $this->service->getSufixoNomeSala($plId);
+    }
+
+    public function preparaCreate()
+    {
+        return $this->service->preparaCreate();
+    }
+
+    public function statusSala(Request $request, $salaId,$status = NULL, $mensagem = NULL) 
+    {
+        return $this->service->statusSala($request, $salaId, $status, $mensagem);
+    }
+
 
 
 
