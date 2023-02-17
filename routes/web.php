@@ -36,7 +36,7 @@ Route::middleware([])->group(function () {
 
      //Grupo de rotas para a classe MacroController
      Route::controller(MacrosController::class)->group(function(){
-        Route::get('/macro', '@index');
+        Route::get('/macro', 'index');
         Route::post('/macro/file',  'store');
         Route::post('/macro/name', 'createUpdate');
         Route::get('/macro/all', 'all');
