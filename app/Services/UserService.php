@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Adldap\Laravel\Facades\Adldap;
 use App\Http\Controllers\MessagesController;
+use App\Models\Configuracoes;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Validators\UserValidator;
@@ -174,5 +175,11 @@ class UserService
             return $usuarioLDAP;
         }
         return null;
+    }
+
+    public function crivoUsuariosAutorizados($sala) {
+        $regexLiberados = Configuracoes::where('nome', Configuracoes::CONFIGURACAO_REGEX_EMAILS_LIBERADOS)->first();
+        $pattern = "/".$regexLiberados->valor."/i";
+        return preg_match($pattern, $sala->email);
     }
 }
