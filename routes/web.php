@@ -33,26 +33,26 @@ Route::middleware([])->group(function () {
         Route::get('/sufixonome', 'getSufixoNomeSala');
     });
 
-    //  //Grupo de rotas para a classe MacroController
-    //  Route::controller(MacroController::class)->group(function(){
-    //     Route::get('/macro', '@index');
-    //     Route::post('/macro/file',  'store');
-    //     Route::post('/macro/name', 'createUpdate');
-    //     Route::get('/macro/all', 'all');
-    //     Route::delete('/macro/{id}',  'delete');
-    //     Route::get('/macro/busca',  'buscadores');
-    //     Route::get('/macro/entradas', 'getEntradasBuscadores');
-    //     Route::get('/macro/{macroId}/buscador', 'getBuscadores');
-    //     Route::put('/macro/{macroId}/buscador', 'addSetBuscador');
-    //     Route::delete('/macro/buscador/{buscadorId}', 'delBuscador');
-    //     Route::post('/macro/mudararquivo', 'mudarArquivo');
-    //     Route::get('/config', 'config');
-    //     Route::post('/config', 'updateConfig');
-    //     Route::get('/exec/{id}','executar');
-    //     Route::get('/exec-old/{id}','executarOld');
-    //     Route::get('/dd','download');
-    //     Route::get('/files','listFiles');
-    // });
+     //Grupo de rotas para a classe MacroController
+     Route::controller(MacroController::class)->group(function(){
+        Route::get('/macro', '@index');
+        Route::post('/macro/file',  'store');
+        Route::post('/macro/name', 'createUpdate');
+        Route::get('/macro/all', 'all');
+        Route::delete('/macro/{id}',  'delete');
+        Route::get('/macro/busca',  'buscadores');
+        Route::get('/macro/entradas', 'getEntradasBuscadores');
+        Route::get('/macro/{macroId}/buscador', 'getBuscadores');
+        Route::put('/macro/{macroId}/buscador', 'addSetBuscador');
+        Route::delete('/macro/buscador/{buscadorId}', 'delBuscador');
+        Route::post('/macro/mudararquivo', 'mudarArquivo');
+        Route::get('/config', 'config');
+        Route::post('/config', 'updateConfig');
+        Route::get('/exec/{id}','executar');
+        Route::get('/exec-old/{id}','executarOld');
+        Route::get('/dd','download');
+        Route::get('/files','listFiles');
+    });
 
     //  //Grupo de rotas para a classe SuperMacroController
     //  Route::controller(SuperMacroController::class)->group(function(){
