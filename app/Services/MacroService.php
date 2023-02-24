@@ -125,7 +125,7 @@ class MacroService
 
     public function getBuscadores($macroId)
     {
-        return $this->buscadorRepository->findByField('macro_id', $macroId)->get();
+        return $this->buscadorRepository->findByField('macro_id', $macroId);
     }
 
     public function addSetBuscador(Request $request, $macroId)
