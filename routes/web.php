@@ -20,6 +20,7 @@ use App\Http\Controllers\MacrosController;
 use App\Http\Controllers\PeriodoLetivosCategoriasController;
 use App\Http\Controllers\PeriodoLetivosController;
 use App\Http\Controllers\SalasController;
+use App\Http\Controllers\ServidoresMoodleController;
 use App\Http\Controllers\UnidadeOrganizacionalController;
 use App\Http\Controllers\UserController;
 
@@ -178,13 +179,13 @@ Route::middleware([])->group(function () {
     //     Route::resource('pl-disciplinas-academicos', PlDisciplinasAcademicosController::class);
     // });
 
-    // //Grupo de rotas para a classe ServidoresMoodleController
-    // Route::controller(ServidoresMoodleController::class)->group(function(){
-    //     Route::get('/servidores-moodle/all', 'all');
-    //     Route::get('/servidores-moodle/links', 'links');
-    //     Route::get('/servidores-moodle/download-script', 'downloadScript');
-    //     Route::resource('servidores-moodle', ServidoresMoodleController::class);
-    // });
+    //Grupo de rotas para a classe ServidoresMoodleController
+    Route::controller(ServidoresMoodleController::class)->group(function(){
+        Route::get('/servidores-moodle/all', 'all');
+        Route::get('/servidores-moodle/links', 'links');
+        Route::get('/servidores-moodle/download-script', 'downloadScript');
+        Route::resource('servidores-moodle', ServidoresMoodleController::class);
+    });
 
     //  //Grupo de rotas para a classe ServidoresMoodleController
     //  Route::controller(ServidoresMoodleController::class)->group(function(){
