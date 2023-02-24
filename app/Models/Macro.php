@@ -70,7 +70,7 @@ class Macro extends Model implements Transformable
     {
         return LogOptions::defaults()
         ->setDescriptionForEvent(fn(string $eventName) => "Macro foi {$eventName}") // descrição do evento
-        ->useLogName('Macro') // nome do evento
+        ->useLogName('Macros') // nome do evento
         ->logOnly([ 'id', 'nome', 'arquivo', 'periodo_letivo_id', 'link_servidor_moodle', 'buscadores']) // alterações nestes atributos serão registrados no log  
         // ->dontLogIfAttributesChangedOnly([]) // atributos que não devem gerar log
         ->logOnlyDirty() // registrar somente os atributos que foram alterados

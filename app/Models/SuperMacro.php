@@ -50,7 +50,7 @@ class SuperMacro extends Model implements Transformable
     {
         return LogOptions::defaults()
         ->setDescriptionForEvent(fn(string $eventName) => "Super Macro foi {$eventName}") // descrição do evento
-        ->useLogName('super_macros') // nome do evento
+        ->useLogName('SuperMacros') // nome do evento
         ->logOnly([ 'id', 'descricao', 'macro_padrao_id',]) // alterações nestes atributos serão registrados no log  
         // ->dontLogIfAttributesChangedOnly([]) // atributos que não devem gerar log
         ->logOnlyDirty() // registrar somente os atributos que foram alterados

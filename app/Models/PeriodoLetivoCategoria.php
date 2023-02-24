@@ -53,8 +53,8 @@ class PeriodoLetivoCategoria extends Model implements Transformable
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->setDescriptionForEvent(fn(string $eventName) => "Periodo_Letivos_Categorias foi {$eventName}") // descrição do evento
-        ->useLogName('Periodo_Letivos_Categorias') // nome do evento
+        ->setDescriptionForEvent(fn(string $eventName) => "Periodo Letivos Categorias foi {$eventName}") // descrição do evento
+        ->useLogName('PeriodoLetivosCategorias') // nome do evento
         ->logOnly(['curso_id', 'periodo_letivo_id', 'categoria_id']) // alterações nestes atributos serão registrados no log  
         // ->dontLogIfAttributesChangedOnly([]) // atributos que não devem gerar log
         ->logOnlyDirty() // registrar somente os atributos que foram alterados

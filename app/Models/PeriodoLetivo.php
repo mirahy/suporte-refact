@@ -48,8 +48,8 @@ class PeriodoLetivo extends Model implements Transformable
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->setDescriptionForEvent(fn(string $eventName) => "Periodo Letivo foi {$eventName}") // descrição do evento
-        ->useLogName('PeriodLetivo') // nome do evento
+        ->setDescriptionForEvent(fn(string $eventName) => "Período Letivo foi {$eventName}") // descrição do evento
+        ->useLogName('PeriodoLetivo') // nome do evento
         ->logOnly(['id', 'nome', 'id_sigecad', 'descricao', 'sufixo', 'inicio_auto_increment', 'ativo']) // alterações nestes atributos serão registrados no log  
         // ->dontLogIfAttributesChangedOnly([]) // atributos que não devem gerar log
         ->logOnlyDirty() // registrar somente os atributos que foram alterados
