@@ -37,6 +37,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\BuscadorRepository::class, \App\Repositories\BuscadorRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\MacroRepository::class, \App\Repositories\MacroRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\SuperMacroRepository::class, \App\Repositories\SuperMacroRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\ServidorMoodleRepository::class, \App\Repositories\ServidorMoodleRepositoryEloquent::class);
         //:end-bindings:
     }
 }
