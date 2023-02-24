@@ -23,19 +23,17 @@ use Illuminate\Support\Facades\File;
 class MacrosController extends Controller
 {
     protected $service;
-   
+
     public function __construct(
         MacroService $service
-    )
-    {
+    ) {
         $this->service      = $service;
 
         $this->middleware('auth');
-        $this->middleware('permissao:'.User::PERMISSAO_ADMINISTRADOR);
-        
+        $this->middleware('permissao:' . User::PERMISSAO_ADMINISTRADOR);
     }
 
-    public function config() 
+    public function config()
     {
         return $this->service->config();
     }
@@ -45,187 +43,90 @@ class MacrosController extends Controller
         return $this->service->updateConfig($request);
     }
 
-    public function index2() 
+    public function index2()
     {
         $arrayRemessa = [];
         $files = File::files($this->service::CAMINHO_STORAGE_PADRAO . "/" . $this->service::STORAGE_ARQUIVOS);
-        foreach($files as $path)
-        {
+        foreach ($files as $path) {
             $arrayRemessa[] = $path->getPathName();
         }
         //return $files;
-        return view('macro',['arquivos' =>  $files]);
+        return view('macro', ['arquivos' =>  $files]);
     }
 
-    
+
     public function index()
     {
         return view("layouts.app-angular");
     }
 
-    public function all () 
+    public function all()
     {
         return $this->service->all();
     }
 
-    public function buscadores () 
+    public function buscadores()
     {
         return $this->service->buscadores();
     }
 
-    public function getBuscadores($macroId) 
+    public function getBuscadores($macroId)
     {
         return $this->service->getBuscadores($macroId);
     }
 
-    public function addSetBuscador (Request $request, $macroId)
+    public function addSetBuscador(Request $request, $macroId)
     {
-        $this->service->addSetBuscador($request, $macroId);
+        return $this->service->addSetBuscador($request, $macroId);
     }
 
-    public function delBuscador ($buscadorId)
+    public function delBuscador($buscadorId)
     {
-        $this->service->delBuscador($buscadorId);
+        return $this->service->delBuscador($buscadorId);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  MacroCreateRequest $request
-     *
-     * @return \Illuminate\Http\Response
-     *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
-     */
+    public function createUpdate(Request $request)
+    {
+        return $this->service->createUpdate($request);
+    }
+
+    public function delete($id)
+    {
+        return $this->service->delete($id);
+    }
+
+    public function listFiles()
+    {
+        return $this->service->listFiles();
+    }
+
+    public function download()
+    {
+        return $this->service->download();
+    }
+
     public function store(MacroCreateRequest $request)
     {
-        try {
-
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
-
-            $macro = $this->repository->create($request->all());
-
-            $response = [
-                'message' => 'Macro created.',
-                'data'    => $macro->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
+        return $this->service->store($request);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function mudarArquivo(Request $request)
     {
-        $macro = $this->repository->find($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $macro,
-            ]);
-        }
-
-        return view('macros.show', compact('macro'));
+        return $this->service->mudarArquivo($request);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function executar($salaId, $autorestore = false)
     {
-        $macro = $this->repository->find($id);
-
-        return view('macros.edit', compact('macro'));
+        return $this->service->executar($salaId, $autorestore);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  MacroUpdateRequest $request
-     * @param  string            $id
-     *
-     * @return Response
-     *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
-     */
-    public function update(MacroUpdateRequest $request, $id)
+    public function executarOld($salaOldId, $autorestore = false)
     {
-        try {
-
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
-
-            $macro = $this->repository->update($request->all(), $id);
-
-            $response = [
-                'message' => 'Macro updated.',
-                'data'    => $macro->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
+        return $this->service->executarOld($salaOldId, $autorestore);
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function makeCurlFile($salaId)
     {
-        $deleted = $this->repository->delete($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'message' => 'Macro deleted.',
-                'deleted' => $deleted,
-            ]);
-        }
-
-        return redirect()->back()->with('message', 'Macro deleted.');
+        return $this->service->makeCurlFile($salaId);
     }
 }
