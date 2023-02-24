@@ -43,6 +43,11 @@ class MacrosController extends Controller
         return $this->service->updateConfig($request);
     }
 
+    public function getEntradasBuscadores()
+    {
+        return $this->service->getEntradasBuscadores();
+    }
+
     public function index2()
     {
         $arrayRemessa = [];
