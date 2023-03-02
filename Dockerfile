@@ -17,6 +17,9 @@ RUN chmod -R 777 storage
 RUN chown www-data:www-data storage -R
 RUN useradd -u 1000 user \
     && addgroup user www-data
+RUN rm -rf /etc/localtime \
+    && ln -s /usr/share/zoneinfo/America/Campo_Grande /etc/localtime \
+    &&  dpkg-reconfigure -f noninteractive tzdata
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
